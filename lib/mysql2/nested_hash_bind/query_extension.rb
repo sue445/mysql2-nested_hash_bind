@@ -36,10 +36,8 @@ module Mysql2
         private
 
         def transform_rows(rows)
-          return rows unless rows
-
           # No columns containing dots
-          return rows unless rows.first&.keys&.any? { |column_name| column_name.to_s.include?(".") }
+          return rows unless rows&.first&.keys&.any? { |column_name| column_name.to_s.include?(".") }
 
           rows.map { |row| transform_row(row) }
         end
