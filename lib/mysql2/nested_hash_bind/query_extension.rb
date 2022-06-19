@@ -4,13 +4,14 @@ module Mysql2
       refine(Mysql2::Client) do
         # @param sql [String]
         # @param options [Hash]
-        # @return [Array,nil]
+        #
+        # @return [Array] Exists columns containing dots
+        # @return [Mysql2::Result] No columns containing dots
+        # @return [nil]
         def query_with_bind(sql, **options)
           rows = query_without_bind(sql, **options)
 
-          return rows.map { |row| transform_row(row) } if rows
-
-          rows
+          transform_rows(rows)
         end
 
         alias_method :query_without_bind, :query
@@ -23,13 +24,14 @@ module Mysql2
           # @param sql [String]
           # @param args [Array]
           # @param options [Hash]
-          # @return [Array,nil]
+          #
+          # @return [Array] Exists columns containing dots
+          # @return [Mysql2::Result] No columns containing dots
+          # @return [nil]
           def xquery_with_bind(sql, *args, **options)
             rows = xquery_without_bind(sql, *args, **options)
 
-            return rows.map { |row| transform_row(row) } if rows
-
-            rows
+            transform_rows(rows)
           end
 
           alias_method :xquery_without_bind, :xquery
@@ -38,6 +40,15 @@ module Mysql2
         end
 
         private
+
+        def transform_rows(rows)
+          return rows unless rows
+
+          # No columns containing dots
+          return rows unless rows.first.keys.any? { |column_name| column_name.to_s.include?(".") }
+
+          rows.map { |row| transform_row(row) }
+        end
 
         def transform_row(row)
           row.each_with_object({}) do |(k, v), new_row|

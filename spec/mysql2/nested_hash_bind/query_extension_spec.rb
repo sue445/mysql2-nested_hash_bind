@@ -18,7 +18,7 @@ RSpec.describe Mysql2::NestedHashBind::QueryExtension, :database do
   describe "#query" do
     subject { db.query(sql).first }
 
-    context "exists columns containing dots" do
+    context "Exists columns containing dots" do
       let(:sql) do
         <<~SQL
           SELECT
@@ -42,7 +42,7 @@ RSpec.describe Mysql2::NestedHashBind::QueryExtension, :database do
       its([:users, :del_flg]) { should eq false }
     end
 
-    context "not exists columns containing dots" do
+    context "No columns containing dots" do
       let(:sql) do
         <<~SQL
           SELECT
@@ -65,7 +65,7 @@ RSpec.describe Mysql2::NestedHashBind::QueryExtension, :database do
 
     let(:account_name) { "sue445" }
 
-    context "exists columns containing dots" do
+    context "Exists columns containing dots" do
       let(:sql) do
         <<~SQL
           SELECT 
@@ -90,7 +90,7 @@ RSpec.describe Mysql2::NestedHashBind::QueryExtension, :database do
       its([:users, :del_flg]) { should eq false }
     end
 
-    context "not exists columns containing dots" do
+    context "No columns containing dots" do
       let(:sql) do
         <<~SQL
           SELECT 
