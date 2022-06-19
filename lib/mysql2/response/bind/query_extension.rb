@@ -3,6 +3,8 @@ module Mysql2
     module Bind
       module QueryExtension
         refine(Mysql2::Client) do
+          # @param sql [String]
+          # @param options [Array]
           # @return [Array,nil]
           def query_with_bind(sql, **options)
             rows = query_without_bind(sql, options)
