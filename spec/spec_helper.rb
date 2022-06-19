@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "mysql2/response/bind"
+require "mysql2-nested_hash_bind"
 require "dotenv/load"
 require "rspec/its"
 
