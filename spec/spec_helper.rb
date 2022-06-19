@@ -2,6 +2,7 @@
 
 require "mysql2/response/bind"
 require "dotenv/load"
+require "rspec/its"
 
 Dir["#{__dir__}/support/**/*.rb"].each { |f| require f }
 

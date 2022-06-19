@@ -39,6 +39,7 @@ jobs:
           - 3306
         env:
           MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: mysql2_test
 
     steps:
       - uses: actions/checkout@v2
@@ -54,10 +55,13 @@ jobs:
           bundle config path vendor/bundle
           bundle update --jobs $(nproc) --retry 3
 
-      - name: Create test database
-        run: |
-          set -xe
-          mysql -h ${MYSQL_HOST} -u ${MYSQL_USERNAME} --port=${MYSQL_PORT} -e "CREATE DATABASE ${MYSQL_DATABASE}"
+      # FIXME: Workaround for "ERROR 2013 (HY000): Lost connection to MySQL server at 'reading initial communication packet', system error: 0"
+      - name: Wait for MySQL startup
+        uses: nick-fields/retry@v2
+        with:
+          timeout_seconds: 15
+          max_attempts: 3
+          command: mysql -h ${MYSQL_HOST} -u ${MYSQL_USERNAME} --port=${MYSQL_PORT} -e "show databases"
         env:
           MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
           MYSQL_PWD: ${{ env.MYSQL_PASSWORD }}
