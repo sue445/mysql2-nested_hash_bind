@@ -3,7 +3,7 @@
 using Mysql2::Response::Bind::QueryExtension
 
 RSpec.describe Mysql2::Response::Bind::QueryExtension, :database do
-  subject { db.query!(sql).first }
+  subject { db.query(sql).first }
 
   let(:sql) do
     <<~SQL

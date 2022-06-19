@@ -4,13 +4,16 @@ module Mysql2
       module QueryExtension
         refine(Mysql2::Client) do
           # @return [Array,nil]
-          def query!(sql, **options)
-            rows = query(sql, options)
+          def query_with_bind(sql, **options)
+            rows = query_without_bind(sql, options)
 
             return rows.map { |row| transform_row(row) } if rows
 
             rows
           end
+
+          alias_method :query_without_bind, :query
+          alias_method :query, :query_with_bind
 
           private
 
