@@ -3,10 +3,10 @@ module Mysql2
     module QueryExtension
       refine(Mysql2::Client) do
         # @param sql [String]
-        # @param options [Array]
+        # @param options [Hash]
         # @return [Array,nil]
         def query_with_bind(sql, **options)
-          rows = query_without_bind(sql, options)
+          rows = query_without_bind(sql, **options)
 
           return rows.map { |row| transform_row(row) } if rows
 
@@ -15,6 +15,27 @@ module Mysql2
 
         alias_method :query_without_bind, :query
         alias_method :query, :query_with_bind
+
+        begin
+          # Register methods if mysql2-cs-bind is exists
+          require "mysql2-cs-bind"
+
+          # @param sql [String]
+          # @param args [Array]
+          # @param options [Hash]
+          # @return [Array,nil]
+          def xquery_with_bind(sql, *args, **options)
+            rows = xquery_without_bind(sql, *args, **options)
+
+            return rows.map { |row| transform_row(row) } if rows
+
+            rows
+          end
+
+          alias_method :xquery_without_bind, :xquery
+          alias_method :xquery, :xquery_with_bind
+        rescue LoadError
+        end
 
         private
 
