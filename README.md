@@ -3,6 +3,8 @@
 
 This is inspired by https://github.com/jmoiron/sqlx
 
+[![test](https://github.com/sue445/mysql2-nested_hash_bind/actions/workflows/test.yml/badge.svg)](https://github.com/sue445/mysql2-nested_hash_bind/actions/workflows/test.yml)
+
 ## Installation
 
 Add this line to your application's Gemfile:
