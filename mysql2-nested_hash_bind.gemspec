@@ -30,9 +30,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "mysql2"
+  spec.add_dependency "mysql2-cs-bind"
 
   spec.add_development_dependency "dotenv"
-  spec.add_development_dependency "mysql2-cs-bind"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-its"
