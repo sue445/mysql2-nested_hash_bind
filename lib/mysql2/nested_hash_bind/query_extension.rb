@@ -17,27 +17,21 @@ module Mysql2
         alias_method :query_without_bind, :query
         alias_method :query, :query_with_bind
 
-        begin
-          # Register methods if mysql2-cs-bind is exists
-          require "mysql2-cs-bind"
+        # @param sql [String]
+        # @param args [Array]
+        # @param options [Hash]
+        #
+        # @return [Array] Exists columns containing dots
+        # @return [Mysql2::Result] No columns containing dots
+        # @return [nil]
+        def xquery_with_bind(sql, *args, **options)
+          rows = xquery_without_bind(sql, *args, **options)
 
-          # @param sql [String]
-          # @param args [Array]
-          # @param options [Hash]
-          #
-          # @return [Array] Exists columns containing dots
-          # @return [Mysql2::Result] No columns containing dots
-          # @return [nil]
-          def xquery_with_bind(sql, *args, **options)
-            rows = xquery_without_bind(sql, *args, **options)
-
-            transform_rows(rows)
-          end
-
-          alias_method :xquery_without_bind, :xquery
-          alias_method :xquery, :xquery_with_bind
-        rescue LoadError
+          transform_rows(rows)
         end
+
+        alias_method :xquery_without_bind, :xquery
+        alias_method :xquery, :xquery_with_bind
 
         private
 
