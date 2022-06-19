@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["sue445"]
   spec.email = ["sue445@sue445.net"]
 
-  spec.summary = "mysql2 extension to bind response to Hash"
-  spec.description = "mysql2 extension to bind response to Hash"
+  spec.summary = "mysql2 and mysql2-cs-bind extension to bind response to nested Hash"
+  spec.description = "mysql2 and mysql2-cs-bind extension to bind response to nested Hash"
   spec.homepage = "https://github.com/sue445/mysql2-nested_hash_bind"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"

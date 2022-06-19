@@ -1,8 +1,7 @@
 # mysql2-nested_hash_bind
+[mysql2](https://github.com/brianmario/mysql2) and [mysql2-cs-bind](https://github.com/tagomoris/mysql2-cs-bind) extension to bind response to nested `Hash`.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/mysql2/response/bind`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This is inspired by https://github.com/jmoiron/sqlx
 
 ## Installation
 
@@ -21,8 +20,53 @@ Or install it yourself as:
     $ gem install mysql2-nested_hash_bind
 
 ## Usage
+Write `require "mysql2-nested_hash_bind"` and `using Mysql2::NestedHashBind::QueryExtension` in your code
 
-TODO: Write usage instructions here
+## Example
+```ruby
+require "mysql2-nested_hash_bind"
+
+using Mysql2::NestedHashBind::QueryExtension
+
+db = Mysql2::Client.new(
+  host: ENV.fetch("MYSQL_HOST", "127.0.0.1"),
+  port: ENV.fetch("MYSQL_PORT", "3306"),
+  username: ENV.fetch("MYSQL_USERNAME"),
+  database: ENV.fetch("MYSQL_DATABASE"),
+  password: ENV.fetch("MYSQL_PASSWORD", ""),
+  charset: "utf8mb4",
+  database_timezone: :local,
+  cast_booleans: true,
+  symbolize_keys: true,
+  reconnect: true,
+)
+
+rows = db.query(<<~SQL)
+  SELECT
+    `posts`.`id`,
+    `posts`.`user_id`,
+    `posts`.`body`,
+    `users`.`account_name` AS `users.account_name`,
+    `users`.`authority` AS `users.authority`,
+    `users`.`del_flg` AS `users.del_flg`
+  FROM `posts`
+  INNER JOIN `users` ON `posts`.`user_id` = `users`.`id`
+SQL
+
+rows.first
+#=> {:id=>1, :user_id=>445, :body=>"test", :users=>{:account_name=>"sue445", :authority=>false, :del_flg=>false}}
+```
+
+If you do not write `using Mysql2::NestedHashBind::QueryExtension`, it will look like this. (This is the original behavior of `Mysql2::Client#query` and `Mysql2::Client#xquery`)
+
+```ruby
+rows.first
+#=> {:id=>1, :user_id=>445, :body=>"test", :"users.account_name"=>"sue445", :"users.authority"=>false, :"users.del_flg"=>false}
+```
+
+## Note
+* If exists columns containing dots, `Mysql2::Client#query` and `Mysql2::Client#xquery` returns `Array<Hash>`
+* If no exists columns containing dots, `Mysql2::Client#query` and `Mysql2::Client#xquery` returns `Mysql2::Result` (This is the original behavior of `Mysql2::Client#query` and `Mysql2::Client#xquery`)
 
 ## Development
 At first, create test database.
