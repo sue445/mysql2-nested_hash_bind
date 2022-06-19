@@ -81,13 +81,23 @@ RSpec.describe Mysql2::NestedHashBind::QueryExtension, :database do
         SQL
       end
 
-      its([:id]) { should eq 1 }
-      its([:user_id]) { should eq 445 }
-      its([:body]) { should eq "test" }
-      its([:users]) { should be_an_instance_of Hash }
-      its([:users, :account_name]) { should eq "sue445" }
-      its([:users, :authority]) { should eq false }
-      its([:users, :del_flg]) { should eq false }
+      context "exists result" do
+        let(:account_name) { "sue445" }
+
+        its([:id]) { should eq 1 }
+        its([:user_id]) { should eq 445 }
+        its([:body]) { should eq "test" }
+        its([:users]) { should be_an_instance_of Hash }
+        its([:users, :account_name]) { should eq "sue445" }
+        its([:users, :authority]) { should eq false }
+        its([:users, :del_flg]) { should eq false }
+      end
+
+      context "not exists result" do
+        let(:account_name) { "not_found" }
+
+        it { should eq nil }
+      end
     end
 
     context "No columns containing dots" do
