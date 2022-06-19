@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-using Mysql2::Response::Bind::QueryExtension
+using Mysql2::NestedHashBind::QueryExtension
 
-RSpec.describe Mysql2::Response::Bind::QueryExtension, :database do
+RSpec.describe Mysql2::NestedHashBind::QueryExtension, :database do
   subject { db.query(sql).first }
 
   let(:sql) do

@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require_relative "lib/mysql2/response/bind/version"
+require_relative "lib/mysql2/nested_hash_bind/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "mysql2-response-bind"
-  spec.version = Mysql2::Response::Bind::VERSION
+  spec.name = "mysql2-nested_hash_bind"
+  spec.version = Mysql2::NestedHashBind::VERSION
   spec.authors = ["sue445"]
   spec.email = ["sue445@sue445.net"]
 
   spec.summary = "mysql2 extension to bind response to Hash"
   spec.description = "mysql2 extension to bind response to Hash"
-  spec.homepage = "https://github.com/sue445/mysql2-response-bind"
+  spec.homepage = "https://github.com/sue445/mysql2-nested_hash_bind"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
