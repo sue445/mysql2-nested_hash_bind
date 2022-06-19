@@ -1,13 +1,14 @@
 RSpec.shared_context :database, shared_context: :metadata do
-  before(:all) do
-    down_migrate
+  around(:each) do |example|
+    db_transaction do
+      example.run
+    end
   end
 
-  around(:each) do |example|
-    up_migrate
-
-    example.run
-
-    down_migrate
+  def db_transaction
+    db.query("BEGIN")
+    yield
+  ensure
+    db.query('ROLLBACK')
   end
 end

@@ -19,4 +19,13 @@ RSpec.configure do |config|
   end
 
   config.include_context :database, database: true
+
+  config.before(:suite) do
+    down_migrate
+    up_migrate
+  end
+
+  config.after(:suite) do
+    down_migrate
+  end
 end
