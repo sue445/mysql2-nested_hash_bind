@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "mysql2"
+
 require_relative "bind/version"
 require_relative "bind/query_extension"
 

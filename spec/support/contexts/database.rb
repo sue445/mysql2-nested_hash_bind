@@ -1,9 +1,13 @@
 RSpec.shared_context :database, shared_context: :metadata do
+  before(:all) do
+    down_migrate
+  end
+
   around(:each) do |example|
-    # TODO: up migrate
+    up_migrate
 
     example.run
 
-    # TODO: down migrate
+    down_migrate
   end
 end

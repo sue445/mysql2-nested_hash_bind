@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "mysql2/response/bind"
+require "dotenv/load"
 
 Dir["#{__dir__}/support/**/*.rb"].each { |f| require f }
 
