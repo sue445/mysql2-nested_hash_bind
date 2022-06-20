@@ -1,13 +1,37 @@
 module Mysql2
   module NestedHashBind
+    # Apply patches to `Mysql2::Client#query` and `Mysql2::Client#xquery`
     module QueryExtension
+      # @!method query(sql, **options)
+      #
+      # @param sql [String]
+      # @param options [Hash]
+      #
+      # @return [Array<Hash>] Exists columns containing dots
+      # @return [Mysql2::Result] No columns containing dots (This is the original behavior of `Mysql2::Client#query`)
+      # @return [nil] No response was returned. (e.g. `ROLLBACK`)
+      #
+      # @see https://www.rubydoc.info/gems/mysql2/Mysql2/Client#query-instance_method
+
+      # @!method xquery(sql, *args, **options)
+      #
+      # @param sql [String]
+      # @param args [Array]
+      # @param options [Hash]
+      #
+      # @return [Array<Hash>] Exists columns containing dots
+      # @return [Mysql2::Result] No columns containing dots (This is the original behavior of `Mysql2::Client#xquery`)
+      # @return [nil] No response was returned. (e.g. `ROLLBACK`)
+      #
+      # @see https://rubydoc.info/gems/mysql2-cs-bind/Mysql2/Client#xquery-instance_method
+
       refine(Mysql2::Client) do
         # @param sql [String]
         # @param options [Hash]
         #
         # @return [Array<Hash>] Exists columns containing dots
-        # @return [Mysql2::Result] No columns containing dots
-        # @return [nil]
+        # @return [Mysql2::Result] No columns containing dots (This is the original behavior of `Mysql2::Client#query`)
+        # @return [nil] No response was returned. (e.g. `ROLLBACK`)
         def query_with_bind(sql, **options)
           rows = query_without_bind(sql, **options)
 
@@ -22,8 +46,8 @@ module Mysql2
         # @param options [Hash]
         #
         # @return [Array<Hash>] Exists columns containing dots
-        # @return [Mysql2::Result] No columns containing dots
-        # @return [nil]
+        # @return [Mysql2::Result] No columns containing dots (This is the original behavior of `Mysql2::Client#xquery`)
+        # @return [nil] No response was returned. (e.g. `ROLLBACK`)
         def xquery_with_bind(sql, *args, **options)
           rows = xquery_without_bind(sql, *args, **options)
 
@@ -38,8 +62,8 @@ module Mysql2
         # @param [Mysql2::Result,nil]
         #
         # @return [Array<Hash>] Exists columns containing dots
-        # @return [Mysql2::Result] No columns containing dots
-        # @return [nil]
+        # @return [Mysql2::Result] No columns containing dots (This is the original behavior of `Mysql2::Client#query` and `Mysql2::Client#xquery`)
+        # @return [nil] No response was returned. (e.g. `ROLLBACK`)
         def transform_rows(rows)
           # No columns containing dots
           return rows unless rows&.first&.keys&.any? { |column_name| column_name.to_s.include?(".") }

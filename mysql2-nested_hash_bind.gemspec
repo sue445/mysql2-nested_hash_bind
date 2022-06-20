@@ -34,8 +34,10 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "dotenv"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "redcarpet"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-its"
+  spec.add_development_dependency "yard"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
