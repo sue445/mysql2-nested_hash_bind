@@ -59,7 +59,7 @@ module Mysql2
 
         private
 
-        # @param [Mysql2::Result,nil]
+        # @param [Mysql2::Result,nil] rows
         #
         # @return [Array<Hash>] Exists columns containing dots
         # @return [Mysql2::Result] No columns containing dots (This is the original behavior of `Mysql2::Client#query` and `Mysql2::Client#xquery`)
