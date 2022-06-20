@@ -5,7 +5,7 @@ module Mysql2
         # @param sql [String]
         # @param options [Hash]
         #
-        # @return [Array] Exists columns containing dots
+        # @return [Array<Hash>] Exists columns containing dots
         # @return [Mysql2::Result] No columns containing dots
         # @return [nil]
         def query_with_bind(sql, **options)
@@ -21,7 +21,7 @@ module Mysql2
         # @param args [Array]
         # @param options [Hash]
         #
-        # @return [Array] Exists columns containing dots
+        # @return [Array<Hash>] Exists columns containing dots
         # @return [Mysql2::Result] No columns containing dots
         # @return [nil]
         def xquery_with_bind(sql, *args, **options)
@@ -35,6 +35,11 @@ module Mysql2
 
         private
 
+        # @param [Mysql2::Result,nil]
+        #
+        # @return [Array<Hash>] Exists columns containing dots
+        # @return [Mysql2::Result] No columns containing dots
+        # @return [nil]
         def transform_rows(rows)
           # No columns containing dots
           return rows unless rows&.first&.keys&.any? { |column_name| column_name.to_s.include?(".") }
@@ -42,6 +47,9 @@ module Mysql2
           rows.map { |row| transform_row(row) }
         end
 
+        # @param row [Hash]
+        #
+        # @return [Hash]
         def transform_row(row)
           row.each_with_object({}) do |(k, v), new_row|
             str_key = k.to_s
