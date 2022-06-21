@@ -33,13 +33,29 @@ RSpec.describe Mysql2::NestedHashBind::QueryExtension, :database do
         SQL
       end
 
-      its([:id]) { should eq 1 }
-      its([:user_id]) { should eq 445 }
-      its([:body]) { should eq "test" }
-      its([:users]) { should be_an_instance_of Hash }
-      its([:users, :account_name]) { should eq "sue445" }
-      its([:users, :authority]) { should eq false }
-      its([:users, :del_flg]) { should eq false }
+      context "symbolize_keys is true" do
+        let(:symbolize_keys) { true }
+
+        its([:id]) { should eq 1 }
+        its([:user_id]) { should eq 445 }
+        its([:body]) { should eq "test" }
+        its([:users]) { should be_an_instance_of Hash }
+        its([:users, :account_name]) { should eq "sue445" }
+        its([:users, :authority]) { should eq false }
+        its([:users, :del_flg]) { should eq false }
+      end
+
+      context "symbolize_keys is false" do
+        let(:symbolize_keys) { false }
+
+        its(["id"]) { should eq 1 }
+        its(["user_id"]) { should eq 445 }
+        its(["body"]) { should eq "test" }
+        its(["users"]) { should be_an_instance_of Hash }
+        its(["users", "account_name"]) { should eq "sue445" }
+        its(["users", "authority"]) { should eq false }
+        its(["users", "del_flg"]) { should eq false }
+      end
     end
 
     context "No columns containing dots" do
@@ -54,9 +70,21 @@ RSpec.describe Mysql2::NestedHashBind::QueryExtension, :database do
         SQL
       end
 
-      its([:id]) { should eq 1 }
-      its([:user_id]) { should eq 445 }
-      its([:body]) { should eq "test" }
+      context "symbolize_keys is true" do
+        let(:symbolize_keys) { true }
+
+        its([:id]) { should eq 1 }
+        its([:user_id]) { should eq 445 }
+        its([:body]) { should eq "test" }
+      end
+
+      context "symbolize_keys is false" do
+        let(:symbolize_keys) { false }
+
+        its(["id"]) { should eq 1 }
+        its(["user_id"]) { should eq 445 }
+        its(["body"]) { should eq "test" }
+      end
     end
   end
 
@@ -84,13 +112,29 @@ RSpec.describe Mysql2::NestedHashBind::QueryExtension, :database do
       context "exists result" do
         let(:account_name) { "sue445" }
 
-        its([:id]) { should eq 1 }
-        its([:user_id]) { should eq 445 }
-        its([:body]) { should eq "test" }
-        its([:users]) { should be_an_instance_of Hash }
-        its([:users, :account_name]) { should eq "sue445" }
-        its([:users, :authority]) { should eq false }
-        its([:users, :del_flg]) { should eq false }
+        context "symbolize_keys is true" do
+          let(:symbolize_keys) { true }
+
+          its([:id]) { should eq 1 }
+          its([:user_id]) { should eq 445 }
+          its([:body]) { should eq "test" }
+          its([:users]) { should be_an_instance_of Hash }
+          its([:users, :account_name]) { should eq "sue445" }
+          its([:users, :authority]) { should eq false }
+          its([:users, :del_flg]) { should eq false }
+        end
+
+        context "symbolize_keys is false" do
+          let(:symbolize_keys) { false }
+
+          its(["id"]) { should eq 1 }
+          its(["user_id"]) { should eq 445 }
+          its(["body"]) { should eq "test" }
+          its(["users"]) { should be_an_instance_of Hash }
+          its(["users", "account_name"]) { should eq "sue445" }
+          its(["users", "authority"]) { should eq false }
+          its(["users", "del_flg"]) { should eq false }
+        end
       end
 
       context "not exists result" do
@@ -113,9 +157,21 @@ RSpec.describe Mysql2::NestedHashBind::QueryExtension, :database do
         SQL
       end
 
-      its([:id]) { should eq 1 }
-      its([:user_id]) { should eq 445 }
-      its([:body]) { should eq "test" }
+      context "symbolize_keys is true" do
+        let(:symbolize_keys) { true }
+
+        its([:id]) { should eq 1 }
+        its([:user_id]) { should eq 445 }
+        its([:body]) { should eq "test" }
+      end
+
+      context "symbolize_keys is false" do
+        let(:symbolize_keys) { false }
+
+        its(["id"]) { should eq 1 }
+        its(["user_id"]) { should eq 445 }
+        its(["body"]) { should eq "test" }
+      end
     end
   end
 end
