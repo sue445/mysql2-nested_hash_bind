@@ -1,16 +1,5 @@
 def db
-  @db ||= Mysql2::Client.new(
-    host: ENV.fetch("MYSQL_HOST", "127.0.0.1"),
-    port: ENV.fetch("MYSQL_PORT", "3306"),
-    username: ENV.fetch("MYSQL_USERNAME"),
-    database: ENV.fetch("MYSQL_DATABASE"),
-    password: ENV.fetch("MYSQL_PASSWORD", ""),
-    charset: "utf8mb4",
-    database_timezone: :local,
-    cast_booleans: true,
-    symbolize_keys: true,
-    reconnect: true,
-  )
+  @db ||= DatabaseHelper.client
 end
 
 def up_migrate
