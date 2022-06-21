@@ -15,6 +15,7 @@ RSpec.shared_context :database, shared_context: :metadata do
     db.query("BEGIN")
     yield
   ensure
+    # Clear records after test
     db.query('ROLLBACK')
   end
 end
