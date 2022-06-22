@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "mysql2"
   spec.add_dependency "mysql2-cs-bind"
 
+  spec.add_development_dependency "benchmark-ips"
   spec.add_development_dependency "dotenv"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
