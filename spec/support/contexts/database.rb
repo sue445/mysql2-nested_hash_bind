@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.shared_context :database, shared_context: :metadata do
   let(:db) do
     DatabaseHelper.client(symbolize_keys: symbolize_keys)

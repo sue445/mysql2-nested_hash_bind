@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Mysql2
   module NestedHashBind
     # Apply patches to `Mysql2::Client#query` and `Mysql2::Client#xquery`
