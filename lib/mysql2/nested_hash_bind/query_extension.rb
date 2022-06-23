@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mysql2
   module NestedHashBind
     # Apply patches to `Mysql2::Client#query` and `Mysql2::Client#xquery`
@@ -35,7 +37,7 @@ module Mysql2
         def query_with_bind(sql, **options)
           rows = query_without_bind(sql, **options)
 
-          transform_rows(rows)
+          __transform_rows(rows)
         end
 
         alias_method :query_without_bind, :query
@@ -51,7 +53,7 @@ module Mysql2
         def xquery_with_bind(sql, *args, **options)
           rows = xquery_without_bind(sql, *args, **options)
 
-          transform_rows(rows)
+          __transform_rows(rows)
         end
 
         alias_method :xquery_without_bind, :xquery
@@ -62,35 +64,43 @@ module Mysql2
         # @param [Mysql2::Result,nil] rows
         #
         # @return [Array<Hash>] Exists columns containing dots
-        # @return [Mysql2::Result] No columns containing dots (This is the original behavior of `Mysql2::Client#query` and `Mysql2::Client#xquery`)
+        # @return [Mysql2::Result] No columns containing dots
+        #                          (This is the original behavior of `Mysql2::Client#query` and `Mysql2::Client#xquery`)
         # @return [nil] No response was returned. (e.g. `ROLLBACK`)
-        def transform_rows(rows)
+        def __transform_rows(rows)
           # No columns containing dots
           return rows unless rows&.first&.keys&.any? { |column_name| column_name.to_s.include?(".") }
 
-          rows.map { |row| transform_row(row) }
+          rows.map { |row| __transform_row(row) }
         end
 
         # @param row [Hash]
         #
         # @return [Hash]
-        def transform_row(row)
+        def __transform_row(row)
           row.each_with_object({}) do |(k, v), new_row|
             str_key = k.to_s
             if str_key.include?(".")
-              parent_key, child_key = *str_key.split(".", 2)
-
-              if query_options[:symbolize_keys]
-                parent_key = parent_key.to_sym
-                child_key = child_key.to_sym
-              end
-
-              new_row[parent_key] ||= {}
-              new_row[parent_key][child_key] = v
+              __update_row(row: new_row, key: str_key, value: v)
             else
               new_row[k] = v
             end
           end
+        end
+
+        # @param row [Hash]
+        # @param key [String]
+        # @param value [Object]
+        def __update_row(row:, key:, value:)
+          parent_key, child_key = *key.split(".", 2)
+
+          if query_options[:symbolize_keys]
+            parent_key = parent_key.to_sym
+            child_key = child_key.to_sym
+          end
+
+          row[parent_key] ||= {}
+          row[parent_key][child_key] = value
         end
       end
     end

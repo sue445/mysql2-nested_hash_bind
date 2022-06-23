@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_context :database, shared_context: :metadata do
   let(:db) do
     DatabaseHelper.client(symbolize_keys: symbolize_keys)
@@ -16,6 +18,6 @@ RSpec.shared_context :database, shared_context: :metadata do
     yield
   ensure
     # Clear records after test
-    db.query('ROLLBACK')
+    db.query("ROLLBACK")
   end
 end
