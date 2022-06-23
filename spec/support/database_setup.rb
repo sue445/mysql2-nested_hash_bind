@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 def db
   @db ||= DatabaseHelper.client
 end

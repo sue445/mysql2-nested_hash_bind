@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module DatabaseHelper
   # @param symbolize_keys [Boolean]
   # @return [Mysql2::Client]
