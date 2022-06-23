@@ -96,7 +96,7 @@ RSpec.describe Mysql2::NestedHashBind::QueryExtension, :database do
     context "Exists columns containing dots" do
       let(:sql) do
         <<~SQL
-          SELECT 
+          SELECT
             `posts`.`id`,
             `posts`.`user_id`,
             `posts`.`body`,
@@ -147,7 +147,7 @@ RSpec.describe Mysql2::NestedHashBind::QueryExtension, :database do
     context "No columns containing dots" do
       let(:sql) do
         <<~SQL
-          SELECT 
+          SELECT
             `posts`.`id`,
             `posts`.`user_id`,
             `posts`.`body`
