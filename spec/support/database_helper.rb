@@ -3,7 +3,7 @@
 module DatabaseHelper
   # @param symbolize_keys [Boolean]
   # @return [Mysql2::Client]
-  def self.client(symbolize_keys: true)
+  def self.client(symbolize_keys: true) # rubocop:disable Metrics/MethodLength
     Mysql2::Client.new(
       host: ENV.fetch("MYSQL_HOST", "127.0.0.1"),
       port: ENV.fetch("MYSQL_PORT", "3306"),

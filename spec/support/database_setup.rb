@@ -4,7 +4,7 @@ def db
   @db ||= DatabaseHelper.client
 end
 
-def up_migrate
+def up_migrate # rubocop:disable Metrics/MethodLength
   db.query(<<~SQL)
     CREATE TABLE `users` (
       `id` int NOT NULL AUTO_INCREMENT,
