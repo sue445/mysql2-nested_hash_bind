@@ -13,6 +13,11 @@ Naming/FileName:
   Exclude:
     - lib/mysql2-nested_hash_bind.rb
 
+Style/SymbolArray:
+  Exclude:
+    # Exclude for rspec-its syntax
+    - spec/**/*_spec.rb
+
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
@@ -29,3 +34,8 @@ Style/TrailingCommaInArrayLiteral:
 
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
+
+Style/WordArray:
+  Exclude:
+    # Exclude for rspec-its syntax
+    - spec/**/*_spec.rb
