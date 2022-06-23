@@ -79,9 +79,9 @@ module Mysql2
         # @return [Hash]
         def __transform_row(row)
           row.each_with_object({}) do |(k, v), new_row|
-            str_key = k.name
-            if str_key.include?(".")
-              __update_row(row: new_row, key: str_key, value: v)
+            key_name = k.name
+            if key_name.include?(".")
+              __update_for_nested_hash(row: new_row, key_name: key_name, value: v)
             else
               new_row[k] = v
             end
@@ -89,10 +89,10 @@ module Mysql2
         end
 
         # @param row [Hash]
-        # @param key [String]
+        # @param key_name [String]
         # @param value [Object]
-        def __update_row(row:, key:, value:)
-          parent_key, child_key = *key.split(".", 2)
+        def __update_for_nested_hash(row:, key_name:, value:)
+          parent_key, child_key = *key_name.split(".", 2)
 
           if query_options[:symbolize_keys]
             parent_key = parent_key.to_sym
