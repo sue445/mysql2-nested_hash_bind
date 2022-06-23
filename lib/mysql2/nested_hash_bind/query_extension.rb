@@ -81,19 +81,26 @@ module Mysql2
           row.each_with_object({}) do |(k, v), new_row|
             str_key = k.to_s
             if str_key.include?(".")
-              parent_key, child_key = *str_key.split(".", 2)
-
-              if query_options[:symbolize_keys]
-                parent_key = parent_key.to_sym
-                child_key = child_key.to_sym
-              end
-
-              new_row[parent_key] ||= {}
-              new_row[parent_key][child_key] = v
+              update_row(row: new_row, key: str_key, value: v)
             else
               new_row[k] = v
             end
           end
+        end
+
+        # @param row [Hash]
+        # @param key [String]
+        # @param value [Object]
+        def update_row(row:, key:, value:)
+          parent_key, child_key = *key.split(".", 2)
+
+          if query_options[:symbolize_keys]
+            parent_key = parent_key.to_sym
+            child_key = child_key.to_sym
+          end
+
+          row[parent_key] ||= {}
+          row[parent_key][child_key] = value
         end
       end
     end
