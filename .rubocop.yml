@@ -6,6 +6,13 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 2.6
 
+Layout/LineLength:
+  Max: 120
+
+Naming/FileName:
+  Exclude:
+    - lib/mysql2-nested_hash_bind.rb
+
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
@@ -13,10 +20,3 @@ Style/StringLiterals:
 Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes
-
-Layout/LineLength:
-  Max: 120
-
-Naming/FileName:
-  Exclude:
-    - lib/mysql2-nested_hash_bind.rb
