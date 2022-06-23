@@ -9,6 +9,11 @@ AllCops:
 Layout/LineLength:
   Max: 120
 
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+    - "*.gemspec"
+
 Naming/FileName:
   Exclude:
     - lib/mysql2-nested_hash_bind.rb
