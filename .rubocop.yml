@@ -16,3 +16,7 @@ Style/StringLiteralsInInterpolation:
 
 Layout/LineLength:
   Max: 120
+
+Naming/FileName:
+  Exclude:
+    - lib/mysql2-nested_hash_bind.rb
