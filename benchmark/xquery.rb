@@ -7,20 +7,32 @@ require "securerandom"
 
 require_relative "../spec/support/database_helper"
 
-class BenchmarkContext
-  attr_reader :db
+SELECT_SQL_WITH_DOT = <<~SQL
+  SELECT 
+    `posts`.`id`,
+    `posts`.`user_id`,
+    `posts`.`body`,
+    `users`.`account_name` AS `users.account_name`,
+    `users`.`authority` AS `users.authority`,
+    `users`.`del_flg` AS `users.del_flg`
+  FROM `posts`
+  INNER JOIN `users` ON `posts`.`user_id` = `users`.`id`
+SQL
 
-  SELECT_SQL = <<~SQL
-    SELECT 
-      `posts`.`id`,
-      `posts`.`user_id`,
-      `posts`.`body`,
-      `users`.`account_name` AS `users.account_name`,
-      `users`.`authority` AS `users.authority`,
-      `users`.`del_flg` AS `users.del_flg`
-    FROM `posts`
-    INNER JOIN `users` ON `posts`.`user_id` = `users`.`id`
-  SQL
+SELECT_SQL_WITHOUT_DOT = <<~SQL
+  SELECT 
+    `posts`.`id`,
+    `posts`.`user_id`,
+    `posts`.`body`,
+    `users`.`account_name` AS `users_account_name`,
+    `users`.`authority` AS `users_authority`,
+    `users`.`del_flg` AS `users_del_flg`
+  FROM `posts`
+  INNER JOIN `users` ON `posts`.`user_id` = `users`.`id`
+SQL
+
+class DatabaseClient
+  attr_reader :db
 
   def initialize
     @db = DatabaseHelper.client
@@ -65,34 +77,38 @@ class BenchmarkContext
     db.query("DROP TABLE IF EXISTS `users`")
   end
 
-  def perform
-    db.xquery(SELECT_SQL)
+  def db_xquery(sql)
+    db.xquery(sql)
   end
 end
 
-class BenchmarkContextWithQueryExtension < BenchmarkContext
+class DatabaseClientWithQueryExtension < DatabaseClient
   using Mysql2::NestedHashBind::QueryExtension
 
-  def perform
-    db.xquery(SELECT_SQL)
+  def db_xquery(sql)
+    db.xquery(sql)
   end
 end
 
-context1 = BenchmarkContext.new
-context2 = BenchmarkContextWithQueryExtension.new
+client = DatabaseClient.new
+patched_client = DatabaseClientWithQueryExtension.new
 
 begin
-  context1.setup
+  client.setup
 
   Benchmark.ips do |x|
     x.report("Mysql2::Client#xquery") do
-      context1.perform
+      client.db_xquery(SELECT_SQL_WITH_DOT)
     end
 
-    x.report("Mysql2::Client#xquery with Mysql2::NestedHashBind::QueryExtension") do
-      context2.perform
+    x.report("Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension") do
+      patched_client.db_xquery(SELECT_SQL_WITH_DOT)
+    end
+
+    x.report("Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension") do
+      patched_client.db_xquery(SELECT_SQL_WITHOUT_DOT)
     end
   end
 ensure
-  context1.teardown
+  client.teardown
 end
