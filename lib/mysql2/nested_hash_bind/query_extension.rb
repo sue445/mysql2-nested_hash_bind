@@ -71,7 +71,28 @@ module Mysql2
           # No columns containing dots
           return rows unless rows&.first&.keys&.any? { |column_name| __include_column_name_dot?(column_name) }
 
-          rows.map { |row| __transform_row(row) }
+          # NOTE: Caching result of `column_name.split`
+          columns_cache = __split_columns(rows.first.keys)
+
+          rows.map { |row| __transform_row(row: row, columns_cache: columns_cache) }
+        end
+
+        # @param column_names [Array<String,Symbol>]
+        # @return [Hash{String,Symbol=>Array<String,Symbol>}]
+        def __split_columns(column_names)
+          column_names.each_with_object({}) do |column_name, hash|
+            str_key = column_name.respond_to?(:name) ? column_name.name : column_name
+            parent_key, child_key = *str_key.split(".", 2)
+
+            next unless child_key
+
+            if query_options[:symbolize_keys]
+              parent_key = parent_key.to_sym
+              child_key = child_key.to_sym
+            end
+
+            hash[column_name] = { parent_key: parent_key, child_key: child_key }
+          end
         end
 
         # @param column_name [String,Symbol]
@@ -84,15 +105,13 @@ module Mysql2
         end
 
         # @param row [Hash]
+        # @param columns_cache [Hash{String,Symbol=>Array<String,Symbol>}]
         #
         # @return [Hash]
-        def __transform_row(row)
+        def __transform_row(row:, columns_cache:)
           row.each_with_object({}) do |(k, v), new_row|
-            # NOTE: Call Symbol#name if possible
-            str_key = k.respond_to?(:name) ? k.name : k
-
-            if str_key.include?(".")
-              __update_for_nested_hash(row: new_row, key: str_key, value: v)
+            if columns_cache[k]
+              __update_for_nested_hash(row: new_row, key: k, value: v, columns_cache: columns_cache)
             else
               new_row[k] = v
             end
@@ -100,15 +119,12 @@ module Mysql2
         end
 
         # @param row [Hash]
-        # @param key [String]
+        # @param key [String,Symbol]
         # @param value [Object]
-        def __update_for_nested_hash(row:, key:, value:)
-          parent_key, child_key = *key.split(".", 2)
-
-          if query_options[:symbolize_keys]
-            parent_key = parent_key.to_sym
-            child_key = child_key.to_sym
-          end
+        # @param columns_cache [Hash{String,Symbol=>Array<String,Symbol>}]
+        def __update_for_nested_hash(row:, key:, value:, columns_cache:)
+          parent_key = columns_cache[key][:parent_key]
+          child_key = columns_cache[key][:child_key]
 
           row[parent_key] ||= {}
           row[parent_key][child_key] = value
