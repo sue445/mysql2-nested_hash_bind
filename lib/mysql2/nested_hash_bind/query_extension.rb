@@ -69,9 +69,18 @@ module Mysql2
         # @return [nil] No response was returned. (e.g. `ROLLBACK`)
         def __transform_rows(rows)
           # No columns containing dots
-          return rows unless rows&.first&.keys&.any? { |column_name| column_name.to_s.include?(".") }
+          return rows unless rows&.first&.keys&.any? { |column_name| __include_column_name_dot?(column_name) }
 
           rows.map { |row| __transform_row(row) }
+        end
+
+        # @param column_name [String,Symbol]
+        # @return [Boolean]
+        def __include_column_name_dot?(column_name)
+          # NOTE: Call Symbol#name if possible
+          return column_name.name.include?(".") if column_name.respond_to?(:name)
+
+          column_name.include?(".")
         end
 
         # @param row [Hash]
