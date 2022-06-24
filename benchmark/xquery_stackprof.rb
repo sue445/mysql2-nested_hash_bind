@@ -1,9 +1,11 @@
 # rubocop:disable all
 
 require "mysql2-nested_hash_bind"
-require "dotenv/load"
+require "dotenv"
 require "securerandom"
 require "stackprof"
+
+Dotenv.load(File.join(__dir__, "..", ".env"))
 
 using Mysql2::NestedHashBind::QueryExtension
 
