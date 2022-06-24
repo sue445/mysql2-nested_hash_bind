@@ -2,8 +2,10 @@
 
 require "mysql2-nested_hash_bind"
 require "benchmark/ips"
-require "dotenv/load"
+require "dotenv"
 require "securerandom"
+
+Dotenv.load(File.join(__dir__, "..", ".env"))
 
 require_relative "../spec/support/database_helper"
 

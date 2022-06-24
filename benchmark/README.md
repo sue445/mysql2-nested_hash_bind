@@ -1,10 +1,10 @@
 # Benchmark report
-## [xquery.rb](xquery.rb)
+## [xquery_bench.rb](xquery_bench.rb)
 ```bash
 $ ruby -v
 ruby 3.1.2p20 (2022-04-12 revision 4491bb740a) [x86_64-darwin21]
 
-$ bundle exec ruby benchmark/xquery.rb
+$ bundle exec ruby xquery_bench.rb
 Warming up --------------------------------------
 Mysql2::Client#xquery
                        705.000  i/100ms
@@ -20,3 +20,12 @@ Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension
 Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension
                           6.757k (± 6.8%) i/s -     33.936k in   5.057701s
 ```
+
+## [xquery_stackprof.rb](xquery_stackprof.rb)
+### Usage
+```bash
+bundle exec ruby xquery_stackprof.rb
+bundle exec stackprof-webnav -d tmp/
+```
+
+open http://localhost:9292/

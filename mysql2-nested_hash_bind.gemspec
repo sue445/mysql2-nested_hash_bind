@@ -33,7 +33,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "mysql2"
   spec.add_dependency "mysql2-cs-bind"
 
-  spec.add_development_dependency "benchmark-ips"
   spec.add_development_dependency "dotenv"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
@@ -42,6 +41,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rubocop_auto_corrector"
   spec.add_development_dependency "rubocop-performance"
   spec.add_development_dependency "yard"
+
+  # benchmark
+  spec.add_development_dependency "benchmark-ips"
+  spec.add_development_dependency "stackprof"
+  spec.add_development_dependency "stackprof-webnav"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
