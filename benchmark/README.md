@@ -20,3 +20,12 @@ Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension
 Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension
                           6.757k (± 6.8%) i/s -     33.936k in   5.057701s
 ```
+
+## [xquery_stackprof.rb](xquery_stackprof.rb)
+### Usage
+```bash
+bundle exec ruby benchmark/xquery_stackprof.rb
+bundle exec stackprof-webnav -d benchmark/tmp/
+```
+
+open http://localhost:9292/
