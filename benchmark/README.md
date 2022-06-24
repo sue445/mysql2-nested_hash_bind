@@ -1,10 +1,10 @@
 # Benchmark report
-## [xquery.rb](xquery.rb)
+## [xquery_bench.rb](xquery_bench.rb)
 ```bash
 $ ruby -v
 ruby 3.1.2p20 (2022-04-12 revision 4491bb740a) [x86_64-darwin21]
 
-$ bundle exec ruby benchmark/xquery.rb
+$ bundle exec ruby benchmark/xquery_bench.rb
 Warming up --------------------------------------
 Mysql2::Client#xquery
                        705.000  i/100ms
