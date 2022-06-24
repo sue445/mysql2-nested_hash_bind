@@ -7,18 +7,18 @@ ruby 3.1.2p20 (2022-04-12 revision 4491bb740a) [x86_64-darwin21]
 $ bundle exec ruby xquery_bench.rb
 Warming up --------------------------------------
 Mysql2::Client#xquery
-                       705.000  i/100ms
+                       694.000  i/100ms
 Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension
-                       104.000  i/100ms
+                       102.000  i/100ms
 Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension
-                       707.000  i/100ms
+                       183.000  i/100ms
 Calculating -------------------------------------
 Mysql2::Client#xquery
-                          6.862k (±11.6%) i/s -     33.840k in   5.085349s
+                          7.148k (± 4.3%) i/s -     36.088k in   5.061558s
 Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension
-                        897.359  (±65.2%) i/s -      3.536k in   5.078764s
+                        980.516  (±52.5%) i/s -      4.080k in   5.047444s
 Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension
-                          6.757k (± 6.8%) i/s -     33.936k in   5.057701s
+                          7.028k (± 4.5%) i/s -     35.136k in   5.022360s
 ```
 
 ## [xquery_stackprof.rb](xquery_stackprof.rb)

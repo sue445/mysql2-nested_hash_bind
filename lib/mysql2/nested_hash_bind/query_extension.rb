@@ -79,7 +79,9 @@ module Mysql2
         # @return [Hash]
         def __transform_row(row)
           row.each_with_object({}) do |(k, v), new_row|
-            str_key = k.to_s
+            # NOTE: Call Symbol#name if possible
+            str_key = k.respond_to?(:name) ? k.name : k
+
             if str_key.include?(".")
               __update_for_nested_hash(row: new_row, key: str_key, value: v)
             else
