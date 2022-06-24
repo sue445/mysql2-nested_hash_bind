@@ -49,7 +49,7 @@ end
 
 def perform
   1000.times do
-    @db.query(<<~SQL)
+    @db.xquery(<<~SQL)
       SELECT
         `posts`.`id`,
         `posts`.`user_id`,
