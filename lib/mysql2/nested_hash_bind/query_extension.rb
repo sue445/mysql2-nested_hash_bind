@@ -68,11 +68,15 @@ module Mysql2
         #                          (This is the original behavior of `Mysql2::Client#query` and `Mysql2::Client#xquery`)
         # @return [nil] No response was returned. (e.g. `ROLLBACK`)
         def __transform_rows(rows)
+          column_names = rows&.first&.keys
+
           # No columns containing dots
-          return rows unless rows&.first&.keys&.any? { |column_name| __include_column_name_dot?(column_name) }
+          return rows unless column_names
+
+          return rows unless column_names.any? { |column_name| __include_column_name_dot?(column_name) }
 
           # NOTE: Caching result of `column_name.split`
-          columns_cache = __split_columns(rows.first.keys)
+          columns_cache = __split_columns(column_names)
 
           rows.map { |row| __transform_row(row: row, columns_cache: columns_cache) }
         end
