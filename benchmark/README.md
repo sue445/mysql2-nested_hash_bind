@@ -8,44 +8,44 @@ $ bundle exec ruby xquery_bench.rb
 ============== Benchmark with LIMIT 10 ==============
 Warming up --------------------------------------
 Mysql2::Client#xquery
-                       281.000  i/100ms
+                       545.000  i/100ms
 Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension
-                       310.000  i/100ms
+                       128.000  i/100ms
 Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension
-                       586.000  i/100ms
+                       297.000  i/100ms
 Calculating -------------------------------------
 Mysql2::Client#xquery
-                          6.219k (±12.2%) i/s -     30.629k in   5.032290s
+                          6.297k (± 8.4%) i/s -     31.610k in   5.070376s
 Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension
-                          4.687k (±10.4%) i/s -     23.250k in   5.045175s
+                          4.420k (±17.4%) i/s -     20.992k in   5.017688s
 Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension
-                          4.394k (±29.4%) i/s -     19.924k in   5.046162s
+                          4.460k (±31.2%) i/s -     19.602k in   5.004246s
 
 Comparison:
-Mysql2::Client#xquery:     6218.6 i/s
-Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension:     4687.5 i/s - 1.33x  (± 0.00) slower
-Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension:     4393.6 i/s - same-ish: difference falls within error
+Mysql2::Client#xquery:     6296.7 i/s
+Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension:     4460.4 i/s - same-ish: difference falls within error
+Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension:     4419.7 i/s - 1.42x  (± 0.00) slower
 
 ============== Benchmark with LIMIT 100 ==============
 Warming up --------------------------------------
 Mysql2::Client#xquery
-                       314.000  i/100ms
+                       201.000  i/100ms
 Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension
-                       102.000  i/100ms
+                        81.000  i/100ms
 Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension
-                       228.000  i/100ms
+                       122.000  i/100ms
 Calculating -------------------------------------
 Mysql2::Client#xquery
-                          3.082k (±11.0%) i/s -     15.386k in   5.079376s
+                          2.377k (±28.2%) i/s -     10.653k in   5.071173s
 Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension
-                          1.084k (±10.2%) i/s -      5.406k in   5.049159s
+                        978.170  (±20.9%) i/s -      4.617k in   5.050665s
 Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension
-                          3.150k (± 5.1%) i/s -     15.732k in   5.008413s
+                          2.745k (±21.0%) i/s -     12.810k in   5.006464s
 
 Comparison:
-Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension:     3150.1 i/s
-Mysql2::Client#xquery:     3081.9 i/s - same-ish: difference falls within error
-Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension:     1083.7 i/s - 2.91x  (± 0.00) slower
+Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension:     2744.6 i/s
+Mysql2::Client#xquery:     2376.9 i/s - same-ish: difference falls within error
+Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension:      978.2 i/s - 2.81x  (± 0.00) slower
 ```
 
 ## [xquery_stackprof.rb](xquery_stackprof.rb)
