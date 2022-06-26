@@ -110,6 +110,8 @@ begin
     x.report("Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension") do
       patched_client.db_xquery(SELECT_SQL_WITHOUT_DOT)
     end
+
+    x.compare!
   end
 ensure
   client.teardown
