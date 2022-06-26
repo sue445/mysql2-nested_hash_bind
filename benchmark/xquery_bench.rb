@@ -108,20 +108,23 @@ patched_client = DatabaseClientWithQueryExtension.new
 begin
   client.setup
 
-  Benchmark.ips do |x|
-    x.report("Mysql2::Client#xquery") do
-      client.select_with_dot(100)
-    end
+  [10, 100].each do |limit|
+    puts "============== Benchmark with LIMIT #{limit} =============="
+    Benchmark.ips do |x|
+      x.report("Mysql2::Client#xquery") do
+        client.select_with_dot(limit)
+      end
 
-    x.report("Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension") do
-      patched_client.select_with_dot(100)
-    end
+      x.report("Mysql2::Client#xquery(sql_with_dot) using Mysql2::NestedHashBind::QueryExtension") do
+        patched_client.select_with_dot(limit)
+      end
 
-    x.report("Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension") do
-      patched_client.select_without_dot(100)
-    end
+      x.report("Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension") do
+        patched_client.select_without_dot(limit)
+      end
 
-    x.compare!
+      x.compare!
+    end
   end
 ensure
   client.teardown
