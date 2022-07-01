@@ -68,7 +68,7 @@ rows.first
 
 ## Note
 * If exists columns containing dots, `Mysql2::Client#query` and `Mysql2::Client#xquery` returns `Array<Hash>`
-* If no exists columns containing dots, `Mysql2::Client#query` and `Mysql2::Client#xquery` returns [`Mysql2::Result`](https://www.rubydoc.info/gems/mysql2/Mysql2/Result) (This is the original behavior of `Mysql2::Client#query` and `Mysql2::Client#xquery`)
+* If no exists columns containing dots, `Mysql2::Client#query` and `Mysql2::Client#xquery` returns [Mysql2::Result](https://www.rubydoc.info/gems/mysql2/Mysql2/Result) (This is the original behavior of `Mysql2::Client#query` and `Mysql2::Client#xquery`)
 
 ## Development
 At first, create test database.
