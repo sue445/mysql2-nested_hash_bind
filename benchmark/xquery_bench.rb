@@ -109,7 +109,7 @@ begin
   client.setup
 
   [10, 100].each do |limit|
-    puts "============== Benchmark with LIMIT #{limit} =============="
+    puts "============== Benchmark with LIMIT #{limit}, without to_a =============="
     Benchmark.ips do |x|
       x.report("Mysql2::Client#xquery") do
         client.select_with_dot(limit)
@@ -121,6 +121,23 @@ begin
 
       x.report("Mysql2::Client#xquery(sql_without_dot) using Mysql2::NestedHashBind::QueryExtension") do
         patched_client.select_without_dot(limit)
+      end
+
+      x.compare!
+    end
+
+    puts "============== Benchmark with LIMIT #{limit}, with to_a =============="
+    Benchmark.ips do |x|
+      x.report("Mysql2::Client#xquery.to_a") do
+        client.select_with_dot(limit).to_a
+      end
+
+      x.report("Mysql2::Client#xquery(sql_with_dot).to_a using Mysql2::NestedHashBind::QueryExtension") do
+        patched_client.select_with_dot(limit).to_a
+      end
+
+      x.report("Mysql2::Client#xquery(sql_without_dot).to_a using Mysql2::NestedHashBind::QueryExtension") do
+        patched_client.select_without_dot(limit).to_a
       end
 
       x.compare!
