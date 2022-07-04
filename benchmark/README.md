@@ -1,4 +1,10 @@
 # Benchmark report
+## Setup
+```bash
+cp .env.example .env
+vi .env
+```
+
 ## [xquery_bench.rb](xquery_bench.rb)
 ```bash
 $ ruby -v
