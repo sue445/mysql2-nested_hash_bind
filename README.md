@@ -84,6 +84,9 @@ cp .env.example .env
 vi .env
 ```
 
+## Benchmark
+See [benchmark/](benchmark/)
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/sue445/mysql2-nested_hash_bind.
