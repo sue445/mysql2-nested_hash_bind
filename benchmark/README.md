@@ -1,7 +1,7 @@
 # Benchmark report
 ## Setup
 ```bash
-cp .env.example .env
+cp ../.env.example .env
 vi .env
 ```
 
