@@ -3,6 +3,7 @@
 
 This is inspired by https://github.com/jmoiron/sqlx
 
+[![Gem Version](https://badge.fury.io/rb/mysql2-nested_hash_bind.svg)](https://badge.fury.io/rb/mysql2-nested_hash_bind)
 [![test](https://github.com/sue445/mysql2-nested_hash_bind/actions/workflows/test.yml/badge.svg)](https://github.com/sue445/mysql2-nested_hash_bind/actions/workflows/test.yml)
 
 ## Installation
