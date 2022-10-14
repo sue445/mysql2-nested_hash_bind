@@ -40,7 +40,7 @@ jobs:
           MYSQL_DATABASE: mysql2_test
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ruby/setup-ruby@v1
         with:
