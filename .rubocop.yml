@@ -6,6 +6,9 @@ AllCops:
   SuggestExtensions: false
   TargetRubyVersion: 3.0
 
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec
+
 Layout/LineLength:
   Max: 120
 
