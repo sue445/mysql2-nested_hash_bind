@@ -57,7 +57,7 @@ jobs:
 
       # FIXME: Workaround for "ERROR 2013 (HY000): Lost connection to MySQL server at 'reading initial communication packet', system error: 0"
       - name: Wait for MySQL startup
-        uses: nick-fields/retry@v2
+        uses: nick-fields/retry@v3
         with:
           timeout_seconds: 15
           max_attempts: 3
