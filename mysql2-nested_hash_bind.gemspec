@@ -48,6 +48,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "stackprof"
   spec.add_development_dependency "stackprof-webnav"
 
+  # FIXME: Workaround for Ruby 3.4+ c.f. https://github.com/brianmario/mysql2/pull/1367
+  spec.add_development_dependency "bigdecimal"
+
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
 end
