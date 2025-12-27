@@ -35,6 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "mysql2-cs-bind"
 
   spec.add_development_dependency "dotenv"
+  spec.add_development_dependency "irb"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rdoc"
   spec.add_development_dependency "rspec"
