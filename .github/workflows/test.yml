@@ -55,7 +55,7 @@ jobs:
         run: |
           set -xe
           bundle config path vendor/bundle
-          bundle update --jobs $(nproc) --retry 3
+          bundle update --all --jobs $(nproc) --retry 3
 
       # FIXME: Workaround for "ERROR 2013 (HY000): Lost connection to MySQL server at 'reading initial communication packet', system error: 0"
       - name: Wait for MySQL startup
