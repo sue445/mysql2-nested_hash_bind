@@ -1,6 +1,12 @@
 # CHANGELOG
 ## Unreleased
-[full changelog](http://github.com/sue445/mysql2-nested_hash_bind/compare/v0.1.1...main)
+[full changelog](http://github.com/sue445/mysql2-nested_hash_bind/compare/v0.1.2...main)
+
+## [0.1.2](https://github.com/sue445/mysql2-nested_hash_bind/releases/tag/v0.1.2) - 2026-08-23
+[full changelog](http://github.com/sue445/mysql2-nested_hash_bind/compare/v0.1.1...v0.1.2)
+
+* Migrate release_gem workflow to sue445/workflows (Also testing the gem release)
+  * https://github.com/sue445/mysql2-nested_hash_bind/pull/87
 
 ## [0.1.1](https://github.com/sue445/mysql2-nested_hash_bind/releases/tag/v0.1.1) - 2025-11-29
 [full changelog](http://github.com/sue445/mysql2-nested_hash_bind/compare/v0.1.0...v0.1.1)
